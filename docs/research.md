@@ -50,4 +50,4 @@ Launchers live in `scripts/`; configs in `configs/`. Run the stages in order, ea
 
 ## Code
 
-`taste/inference/` contains samplers, `annotation/` contains probes and labeling tools, `corpus/` builds training data, and `training/` contains trainers. Model definitions live in `models/`; the window VAE is in `codec/`.
+`taste/inference/` contains samplers, `annotation/` contains probes and labeling tools, `corpus/` builds training data, and `training/` contains trainers. Model definitions live in `models/`; the window VAE is in `codec/`. See the [code map](code-map.md) for each module and the [probing guide](probing.md) for probe replication and adaptation to another dataset.

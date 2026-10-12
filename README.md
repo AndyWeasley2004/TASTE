@@ -1,6 +1,6 @@
 # TASTE: Taxonomy-Aware Symbolic Piano Generation from Textual Description
 
-Official implementation of **TASTE**: generate expressive solo-piano MIDI from musical tags and a text description.
+Official implementation of **TASTE**, a taxonomy-aware framework for translating musical intentions into expressive solo-piano MIDI. TASTE combines explicit musical attributes, section structure, and free-form imagery descriptions with tiered annotation and staged training, demonstrated through autoregressive and diffusion Transformer generators.
 
 [Demo](https://taste-piano.github.io/) | [Dataset](https://huggingface.co/datasets/Itsuki-music/TASTE) | [Checkpoints](https://huggingface.co/Itsuki-music/TASTE)
 
@@ -39,8 +39,9 @@ Edit [prompts/example.json](prompts/example.json) with your tags and imagery des
 | I want to… | Start here |
 |---|---|
 | Adjust generation, use another AR checkpoint, or run DiT | [Generation guide](docs/generation.md) |
-| Predict musical attributes or section structure | [Probing guide](docs/probing.md) |
+| Probe MIDI, retrain probes, or adapt to another dataset | [Probing guide](docs/probing.md) |
 | Use the dataset, reproduce annotations, or train models | [Research guide](docs/research.md) |
+| Find the implementation of each pipeline module | [Code map](docs/code-map.md) |
 
 ## Citation
 
