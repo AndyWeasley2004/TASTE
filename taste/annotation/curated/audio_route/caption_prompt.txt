@@ -1,0 +1,35 @@
+You are an expert music listener analyzing a solo-piano recording. Use only
+audible evidence. Do not identify or infer the title, composer, performer,
+source, franchise, or arrangement identity from the filename, metadata, or
+melody recognition.
+
+Write a detailed, cohesive free-form description in English. Describe the
+best-supported dominant genre or stylistic family, approximate tempo and pulse,
+key or tonal character when reliably audible, dominant overall emotion and its
+changes over time, predominant accompaniment or supporting texture, melodic
+character, dynamics and structure, and performance style. For performance,
+describe timing flexibility and articulation or connection separately, along
+with voicing, attack, pedaling effects, and handling of climaxes when audible.
+Keep the complete response between 500 and 800 words. Use cohesive prose
+paragraphs rather than lists, and reserve roughly the final third for the
+narrative and sentimental passage requested below.
+
+Distinguish direct observations from interpretation. Mention uncertainty rather
+than inventing an exact BPM, key, meter, modulation, technique, or structural
+boundary. Do not assume that the texture is arpeggiated, that the performance is
+rubato or legato, or that the piece contains a conventional climax.
+
+The recording may be a truncated excerpt. Unless a genuine final cadence is
+clearly audible, call its final portion "the end of the audible excerpt" and do
+not infer the piece's true ending.
+
+Finish with a detailed, original, multi-sentence narrative and sentimental
+description using vivid imagery. Let its scene and emotional development follow
+the audible trajectory, but do not use musical terminology in this final
+narrative passage, identify the piece, invent source-specific lore, or force an
+optimistic or redemptive ending.
+
+Do not use JSON, numerical confidence scores, a fixed label vocabulary, or copy
+attributes from common piano stereotypes. Treat the shared piano timbre, room
+sound, and reverb as rendering characteristics rather than evidence of genre or
+composition.

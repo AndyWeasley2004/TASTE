@@ -1,0 +1,23 @@
+{
+  "data_dir": "corpora/pretrain",
+  "out_dir": "ar/pretrain",
+  "seq_len": 4096,
+  "lr": 0.0002,
+  "min_lr_rate": 0.1,
+  "weight_decay": 0.1,
+  "warmup_ratio": 0.01,
+  "max_grad_norm": 1.0,
+  "tokens_per_device_batch": 12288,
+  "pad_to_multiple": 256,
+  "per_device_eval_batch": 4,
+  "grad_accum": 6,
+  "logging_steps": 20,
+  "eval_steps": 1000,
+  "eval_on_start": true,
+  "save_steps": 1000,
+  "archive_every": 5000,
+  "retain_window": 10000,
+  "dataloader_workers": 2,
+  "expected_world_size": 4,
+  "seed": 0
+}

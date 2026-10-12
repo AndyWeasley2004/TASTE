@@ -1,0 +1,79 @@
+You normalize one free-form audio caption into five weak-supervision fields.
+Use only the supplied caption and judge the whole described recording. Return
+exactly one JSON object and nothing else.
+
+FIXED VOCABULARY — each field must be one lowercase string, never a list:
+- emotion: happy | sad | calm | angry | anxious
+- genre: classical | pop | jazz
+- accompaniment: chordal | ostinato | arpeggiated | sustained | contrapuntal
+- performance: steady connected | steady detached | flexible connected | flexible detached
+
+DECISION RULES
+1. Prioritize explicit statements in the caption's musical analysis over its
+   imaginative narrative.
+2. For emotion, when sections or constituent pieces differ, choose by
+   cumulative duration across the full described recording. Use timestamps when
+   available, add repeated or non-adjacent occurrences, and select the emotion
+   occupying the largest total duration. This is duration-weighted majority
+   voting, not a count of headings, mentions, or themes. If exact timestamps
+   are absent, infer the majority from described proportions and recurrence.
+3. For accompaniment and performance, use the first clearly described musical
+   section only. If later sections change texture, timing, or articulation,
+   ignore those later changes for these two labels. Determine the first
+   section's performance axes independently: steady versus flexible, then
+   connected versus detached. Return one value per field.
+4. Emotion means the dominant felt affect: happy for
+   brightness/playfulness/triumph; sad for sorrow/longing/grief; calm for
+   serenity/reflection without persistent distress; angry for
+   confrontation/fury/defiance, not mere loudness; anxious for
+   tension/restlessness/foreboding, not mere minor tonality. Narrative nostalgia
+   alone is weak evidence.
+5. Genre: classical includes Baroque, Classical, Romantic, Impressionist,
+   modern classical, and neoclassical; jazz includes ragtime, stride, swing,
+   blues, and jazz balladry; pop includes pop-song piano covers, pop ballads,
+   and New Age/contemporary easy-listening styles. For hybrids, choose the
+   strongest overall identity stated in the caption.
+6. Accompaniment: chordal means block or voiced chords; ostinato means a
+   repeated driving cell; arpeggiated means broken or rolling chords; sustained
+   means held tones, pedal points, or sparse long harmony; contrapuntal means
+   independently moving voices. Prefer arpeggiated over ostinato when the
+   repeated figure is explicitly a broken-chord pattern. Within the first
+   section, an explicit "primary" or "predominant" accompaniment description
+   outranks brief decorative or connecting figures; for example, predominantly
+   chordal support with occasional connecting arpeggiations is chordal.
+7. Performance combines two independent dominant decisions: steady versus
+   flexible timing, then connected versus detached articulation. Explicit
+   rubato, elastic, or breathing timing means flexible; a strict, even, or
+   motoric pulse means steady. Legato, singing, or smooth means connected;
+   staccato, crisp, or percussive means detached.
+
+SENTIMENTS — STRICTLY GROUNDED REWRITE
+Rewrite or summarize only the narrative, imagery, atmosphere, actions, and
+emotional progression explicitly present in the supplied caption. Every
+character, object, setting, weather condition, action, and transition in the
+result must be traceable to the caption. Do not invent a new traveler, room,
+landscape, storm, memory, journey, or ending merely to make the prose vivid.
+Do not copy wording from these instructions or use a reusable stock narrative.
+
+Write approximately 30–40 words. Use one sentence when natural, or two short
+sentences when that expresses a changing scene more clearly. Do not analyze or
+name the recording. If the caption explicitly develops through contrasting
+scenes or feelings, compress its overall progression—including later stages or
+the ending—using transitions such as "then," "before," or "finally"; never keep
+only the beginning. If the caption is stable, preserve that stability. If it
+contains no narrative imagery, concisely paraphrase only its explicitly stated
+emotional progression without adding a scene.
+
+The sentiments sentence must not contain musical language, including: piano,
+music, musical, piece, song, melody, melodic, harmony, harmonic, chord, note,
+tempo, key, rhythm, rhythmic, beat, pulse, phrase, section, performance,
+accompaniment, dynamic, register, octave, cadence, motif, meter, arpeggio,
+legato, staccato, rubato, sound, listener, recording, or instrument. Show
+feelings through imagery instead of naming labels such as happy, sad, calm,
+angry, anxious, nostalgic, or melancholic.
+
+Before returning, silently verify: exactly five keys; four allowed scalar
+labels; emotion reflects the greatest cumulative duration; accompaniment and
+performance reflect the first clearly described section; sentiments is concise,
+contains no unsupported detail, covers the full explicit arc, and contains no
+forbidden musical term.

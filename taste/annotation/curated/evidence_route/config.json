@@ -1,0 +1,18 @@
+{
+  "revision": "qwen36_jina_agent_v5_fallback_search",
+  "model": "Qwen/Qwen3.6-35B-A3B",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "api_key": "local",
+  "context_length": 16384,
+  "temperature": 0.0,
+  "top_p": 0.95,
+  "top_k": 20,
+  "max_output_tokens": 1200,
+  "enable_thinking": false,
+  "max_search_calls": 2,
+  "max_read_calls": 1,
+  "max_query_expansions": 0,
+  "max_tool_result_chars": 10000,
+  "timeout_seconds": 300,
+  "jina_mcp_url": "https://mcp.jina.ai/v1?include_tools=search_web,read_url"
+}

@@ -1,0 +1,17 @@
+{
+  "emotion": ["happy", "sad", "calm", "angry", "anxious"],
+  "genre": ["classical", "pop", "jazz"],
+  "accompaniment": [
+    "chordal",
+    "ostinato",
+    "arpeggiated",
+    "sustained",
+    "contrapuntal"
+  ],
+  "performance": [
+    "steady connected",
+    "steady detached",
+    "flexible connected",
+    "flexible detached"
+  ]
+}

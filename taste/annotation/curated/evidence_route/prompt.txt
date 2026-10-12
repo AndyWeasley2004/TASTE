@@ -1,0 +1,174 @@
+You are researching one named solo-piano work for weak text-to-MIDI supervision.
+Use one focused web search and, only when needed, one fallback search to verify
+the exact entity, retain auditable evidence, and then annotate only the TARGET
+below. Evidence may describe the target movement, its parent work, or its
+collection; keep these scopes distinct.
+
+ALLOWED FIXED VOCABULARY
+- emotion: happy, sad, calm, angry, anxious
+- genre: classical, pop, jazz
+- accompaniment: chordal, ostinato, arpeggiated, sustained, contrapuntal
+- performance: steady connected, steady detached, flexible connected, flexible detached
+
+SEARCH POLICY
+1. Make one focused discovery search using the strongest available creator,
+   title, catalog, movement, and localized-title terms. After that search,
+   choose one of these routes:
+   - if its snippets clearly identify TARGET and provide credible context, stop
+     retrieving and annotate from the search record;
+   - if one identity-matched result needs fuller context, read exactly that one
+     strongest URL, then annotate;
+   - if the first search is empty, erroneous, unrelated, identity-ambiguous, or
+     uses the wrong catalog convention, make one fallback search with a
+     materially corrected strategy: for example, use the localized title,
+     replace a suspected generic `Op.` prefix with the composer's actual catalog
+     prefix, or search the verified parent work. Do not merely repeat the same
+     query. After the fallback, read at most one strongest identity-matched URL;
+   - if neither search credibly matches TARGET, do not read a merely similar
+     page. Stop retrieving, retain the dataset genre prior, and abstain from
+     fields without support.
+   Never make a third search and never read multiple pages. Search and read are
+   not both mandatory.
+   A tool error, `execute error`, empty result, inaccessible page, or unrelated
+   result is not evidence. If that is all the search returns, do not infer
+   emotion, accompaniment, performance, or sentiments from TARGET's title,
+   creator, or generic genre practice; abstain from those fields.
+2. For classical movements, put the exact movement, parent-work identity, and
+   catalog information into the initial query. Use the fallback only to correct
+   a likely catalog convention or parent-work mismatch. Prefer Wikipedia or a strong
+   program-note or analysis page. Reject conflicting composer, catalog, work, or movement
+   numbers. Matching a generic form or title such as "Prelude", "No. 2", or
+   "Piano Concerto" is not identity verification. Check creator plus every
+   available opus/catalog number and movement/track number. Catalog prefixes
+   are meaningful: do not equate Op. 90, K. 90, WWV 90, or work No. 90 merely
+   because the number matches, unless a source explicitly establishes the alias
+   or metadata convention. Never silently
+   replace TARGET with a more famous work that has a similar identifier. If
+   TARGET metadata appears inconsistent with retrieved pages, keep TARGET as
+   the entity being annotated and abstain from claims that require the disputed
+   identity. Identity conflict overrides weak-label leniency: do not guess the
+   intended work. A parent-work page is valid evidence when it contains a section,
+   movement list, tempo, form, character, or analysis for the TARGET movement.
+   Read the relevant movement section rather than rejecting the page because its
+   title names the whole sonata, suite, or collection.
+3. For POP909, verify Chinese title plus artist. Include `百度百科` in the initial
+   query and prefer an exact Baidu Baike result. If Baidu Baike has no exact
+   result, the fallback may target one credible Chinese source such as an official broadcaster,
+   established music platform, or reliable lyrics/source page. Read at most one
+   result only when its snippet is insufficient.
+   Lyrics may support emotion and imagery, but not piano accompaniment or
+   performance. Never reproduce complete lyrics.
+   For Chinese, Korean, Japanese, and other Asian repertoire, use a localized
+   title or artist query and Baidu Baike when it is likely to have stronger
+   biographical, release, or work information than English-language results.
+   For popular songs and piano covers, determine whether the original is
+   instrumental or vocal. If it is vocal, search for a concise song/lyrics
+   account using sources such as Wikipedia, Baidu Baike, or a reliable lyrics
+   page. Lyrics are a strong cue for emotion and sentiment/imagery when the
+   exact song identity is verified, but they do not establish the piano
+   arrangement's accompaniment or performance style. If the original is
+   instrumental, search its program, reception, context, or official description
+   instead of inventing lyrical meaning.
+4. Search-result snippets are retained as evidence records. For a well-known
+   work, an unambiguous result title/snippet may support identity and broad
+   genre without opening the result. Read the one strongest identity-matched
+   page only when a nuanced claim about emotion, texture, performance, or lyrics
+   genuinely needs context.
+   Each supplied evidence record has an `evidence_id`, `source_type`, `title`,
+   `url`, and tool arguments. Treat these fields as provenance. Use the title,
+   creator, URL, and scope to distinguish records with similar names. A record
+   is a candidate until its content establishes that it refers to TARGET. Cite
+   only the exact `ev_jina_*` IDs supplied with tool results; never invent IDs
+   such as `trace_1`, `trace_001`, or a tool name. If no supplied record supports
+   a field, leave its evidence arrays empty and abstain unless TARGET metadata
+   itself provides an allowed dataset prior. Evidence records may also contain
+   `identity_cautions`; treat each caution as an unresolved mismatch that must
+   be resolved by document content before that record can support the field.
+5. This is weak supervision, so make reasonable, auditable inference rather than
+   requiring a source to state an allowed label verbatim:
+   - emotion and sentiments may be inferred from descriptions of the TARGET
+     movement/song's tempo, character, dynamics, lyrical meaning, compositional
+     background, reputation, agitation, or form;
+   - performance is deliberately weak-label-lenient: infer steady/flexible and
+     connected/detached from emotion, tempo/character, genre practice,
+     compositional background, or verified lyrical affect when direct
+     articulation/performance wording is unavailable. State the indirect scope
+     honestly rather than abstaining merely because no source uses the exact
+     vocabulary;
+   - genre may be inferred from verified work identity and musical tradition;
+   - accompaniment may also be a supported best guess. Infer the most plausible
+     pattern from available texture/figuration language, form, genre/era
+     practice, arrangement type, tempo, character, score context, or related
+     musical description even when no source names the allowed value verbatim.
+     Lyrics or reputation alone are insufficient, but they may contribute when
+     combined with actual musical context;
+   - collection-level prose can provide context, but cannot overwrite more
+     specific target-movement evidence.
+   Do not invent facts from an evocative title, and never transfer descriptions
+   from a different movement or song.
+6. If a clear search snippet, Wikipedia, or Baidu Baike result already
+   establishes a work's identity, reputation, genre, and emotional context,
+   stop retrieving. Do not spend the optional read merely to obtain a second
+   source. Use the read only to resolve missing context from the best result.
+7. Cite exact evidence URLs returned by read_url. Preserve short support excerpts;
+   paraphrase copyrighted lyrics.
+8. Use the supplied search_hints to compose the strongest initial query. They are
+   not evidence. Use the fallback only when the initial result meets the failure
+   or ambiguity conditions above.
+   For a movement, a parent page that clearly identifies and describes that
+   movement is usually sufficient; do not spend calls looking for a separate
+   movement-only page.
+9. This is a weak-label stage: prefer a reasonable evidence-based label when
+   the available descriptions, metadata, or musical context make one option
+   more likely. Use contextual best guesses for every field, including
+   accompaniment and performance. Abstain only when the evidence offers no
+   credible musical or affective support for that field; do not fill a field
+   from identity/title alone. State broader or indirect support honestly in
+   `inference_scope`.
+
+OUTPUT
+Return JSON only. Return exactly one object with exactly these five top-level
+keys: emotion, genre, accompaniment, performance, sentiments.
+Do not repeat TARGET metadata. Do not add commentary before or after the JSON.
+For each of the five keys, return an object with:
+- value
+- status
+- evidence_ids
+- evidence_urls
+- support_excerpts
+- inference_scope
+- rationale
+Set `inference_scope` to one of `target_movement`, `parent_work`, `collection`,
+`song`, `lyrics`, or a `+` combination when multiple scopes support the field.
+Fixed fields must use the vocabulary above. `status` must be `accepted` or
+`abstain`. Sentiments `value` is one original, target-specific, non-lyrical
+mood-imagery sentence of roughly 15-35 words. It must evoke a concrete scene,
+action, or atmosphere. Do not return a sentiment category, adjective list,
+analysis summary, or bare words such as `calm`, `positive`, `sad`,
+`melancholic`, or `nostalgic`.
+
+For `accepted`, cite the most relevant supplied records in `evidence_ids`, keep
+their URLs in `evidence_urls`, and include short supporting text in
+`support_excerpts`. These citations are retained for later auditing; the weak
+label may still involve a reasonable inference. For `abstain`, use `value:
+null` and empty evidence arrays.
+
+SENTIMENT/IMAGERY STYLE EXAMPLES
+- calm -> Gazing out the window at the gentle afternoon sunlight in the
+  classroom, chalk dust floating softly while distant voices blur into a warm
+  quiet.
+- sad -> Returning to the old house after leaving a few decades ago, touching
+  the worn banister while late light falls across familiar rooms and
+  half-remembered voices.
+- happy -> Triumph after a great success, bright city lights reflecting on
+  glass doors as cheers and laughter fill the street.
+- anxious -> Waiting alone in a train station before an important departure,
+  watching the clock hands jump forward while footsteps and announcements blur
+  into nervous motion.
+- angry -> Walking through rain-bright streets after a bitter argument, jaw
+  tight and hands clenched as traffic lights flash against wet pavement.
+
+These few-shot examples demonstrate writing style only and are not evidence for
+TARGET. Do not copy their openings, settings, actions, or wording. Before
+returning, rewrite the sentiment if it shares any sequence of five consecutive
+words with an example; construct distinct imagery from TARGET evidence.
