@@ -7,10 +7,14 @@ name = "taste"
 version = "1.0.0"
 description = "TASTE: taxonomy-aware symbolic piano generation from textual description"
 requires-python = ">=3.11"
-dynamic = ["dependencies"]
+dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools.dynamic]
-dependencies = { file = ["requirements.txt"] }
+dependencies = { file = ["requirements-generation.txt"] }
+
+[tool.setuptools.dynamic.optional-dependencies]
+research = { file = ["requirements.txt"] }
+probes = { file = ["requirements-probes.txt"] }
 
 [tool.setuptools.packages.find]
 include = ["taste*"]
