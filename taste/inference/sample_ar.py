@@ -1,20 +1,8 @@
 #!/usr/bin/env python3
-"""Conditional sampling from a TASTE-AR conditional-stage checkpoint.
+"""Sample conditional AR MIDI from tags and imagery.
 
-Each prompt carries the four controlled attributes, a key/tempo header and a
-free-text imagery description, which is encoded with frozen Qwen3-Embedding-4B
-using the same recipe as ``taste.representation.imagery_states``. Sampling is
-T 0.98 / top_p 0.98 within the 4,096-token context.
-
-Rows are ordered prompt-major, seed-minor and sampled in batched ``generate``
-calls. One RNG seed (the first seed) drives every batch, so the per-row
-``seed`` in the sidecar labels the variant; a row is reproducible only by
-re-running the same batch layout.
-
-    python -m taste.inference.sample_ar \
-        --model-dir $TASTE_CKPT_ROOT/ar/high_quality/final \
-        --prompts-json prompts.json --n-seeds 8 --rows-per-batch 32 \
-        --output-dir out/ar_high_quality
+Rows are prompt-major, seed-minor. One RNG stream drives all batches, so
+reproducibility requires the same batch layout, not just the sidecar seed.
 """
 from __future__ import annotations
 
@@ -44,8 +32,7 @@ MAX_CONTEXT = 4096
 
 SEED_BASE = 101
 
-# prompt keys the sidecar records explicitly; anything else in a prompts.json
-# entry (piece_id, reference_midi, ...) is copied into the sidecar verbatim
+# Unrecognized prompt fields are copied into the sidecar.
 KNOWN_PROMPT_KEYS = {*ATTRIBUTE_FIELDS, "key", "tempo", "imagery", "name"}
 
 

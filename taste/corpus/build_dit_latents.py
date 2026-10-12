@@ -1,22 +1,9 @@
 #!/usr/bin/env python3
-"""Encode the token corpora into window-VAE latents for the latent DiT.
+"""Encode token corpora into window-VAE posterior means.
 
-One store per (stage, split) under ``<out_root>/<stage>/<split>/``: a flat
-float16 ``mu.f16`` memmap of shape ``(n_latents_total, 128)``, an
-``index.parquet`` with one row per kept corpus row, and ``meta.json``. Each row
-is split into 5 s windows, cropped to at most 38 windows on a section boundary,
-cut into 1 s encoder windows spaced ``--hop`` seconds apart and encoded to the
-posterior mean. At hop 0.5 the store holds two latents per second, interleaved
-integer offset first; ``--from-v1`` reuses the integer-offset latents of an
-existing hop-1.0 store and encodes only the half-offset windows.
-``--shard K/N`` encodes the split's source files with ``i % N == K`` and
-``--merge N`` stitches the shard directories back in source-file order.
-
-    python -m taste.corpus.build_dit_latents --stage high_quality --split val --gpu 0
-    python -m taste.corpus.build_dit_latents --stage high_quality --split val --hop 0.5 \
-        --from-v1 <hop-1.0 store>/high_quality/val
-    python -m taste.corpus.build_dit_latents --stage large_public --split pass0 --shard 2/6 --gpu 2
-    python -m taste.corpus.build_dit_latents --stage large_public --split pass0 --merge 6
+Stores contain mu.f16 [N, 128], index.parquet and meta.json. At hop 0.5,
+integer- and half-second offsets are interleaved. --from-v1 reuses integer
+offsets; --merge restores source-file order after sharded encoding.
 """
 from __future__ import annotations
 

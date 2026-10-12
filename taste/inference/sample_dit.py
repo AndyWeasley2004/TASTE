@@ -1,20 +1,9 @@
 #!/usr/bin/env python3
-"""Sample a cohort from a TASTE-DiT checkpoint and decode it to MIDI.
+"""Sample DiT latents and decode to MIDI.
 
-Each prompt names a high-quality validation piece; its section plan and
-duration come from that piece's row in the DiT latent store index, so the
-generated latents carry the ground-truth plan and length and only the content
-is sampled. The rectified-flow ODE is integrated with Euler from ``t = 1``
-(pure noise) to ``t = 0`` in ``--steps`` uniform steps, with classifier-free
-guidance against a fully null condition. The latents are decimated to the
-integer-second offsets the decoder consumes and decoded by the window VAE
-(``taste.inference.latent_decode``) to a corpus-format token row and a MIDI
-file, plus a sidecar JSON with the prompt's controls, seed, section plan,
-window count, sampler settings and token count.
-
-    python -m taste.inference.sample_dit \
-        --model-dir $TASTE_CKPT_ROOT/dit/high_quality/final \
-        --prompts-json prompts.json --output-dir out/dit_high_quality
+Prompt IDs select section plans and lengths from the high-quality latent index.
+Euler sampling runs noise-to-data with classifier-free guidance; only integer-
+second latents are passed to the codec.
 """
 from __future__ import annotations
 
@@ -54,7 +43,6 @@ MODEL_FIELDS = ("d_model", "n_layers", "n_heads", "mlp_ratio", "cond_dim", "max_
 KNOWN_PROMPT_KEYS = {*ATTRIBUTE_FIELDS, "key", "tempo", "imagery", "name"}
 
 
-# ------------------------------------------------------------------- loading
 
 def load_dit(model_dir: Path, device: str, config_path: Path | None = None,
              stats_path: Path | None = None) -> tuple[LatentDiT, tuple, int]:
@@ -113,7 +101,6 @@ def plan_for(prompt: dict, plans: dict[str, dict]) -> dict:
     return plan
 
 
-# ------------------------------------------------------------------ sampling
 
 def condition_tensors(rows, classes, contexts, length, device):
     """Conditioning for one batch of ``(prompt_index, prompt, plan, k)`` rows."""
@@ -197,7 +184,6 @@ def sample_batch(model, rows, classes, contexts, stats, args, device) -> list[np
     return [latents[row, :plan["n_latents"]] for row, (_, _, plan, _) in enumerate(rows)]
 
 
-# ------------------------------------------------------------------- cohorts
 
 def sample_latents(model, stats, max_len: int, prompts: list[dict],
                    plans: dict[str, dict], contexts, args, device):
@@ -269,7 +255,6 @@ def decode_and_write(order, mus, args, device):
     return seconds, decode_stats
 
 
-# ---------------------------------------------------------------------- main
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()

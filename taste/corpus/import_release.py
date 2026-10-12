@@ -1,22 +1,8 @@
 #!/usr/bin/env python3
-"""Expand the released dataset into the directory layout the builders and annotation read.
+"""Expand released labels and MIDI into the annotation and corpus-builder layout.
 
-``--release-dir`` is the dataset root holding ``curated/``, ``high_quality/``,
-``large_public/`` and ``large_public_annotation/``; each tier is read from its
-``labels.parquet`` (and ``midi/`` for curated and high_quality; curated MIDI
-sits in ``midi/<xx>/<piece_id>.mid``, ``xx`` the two hex characters after
-``piece_``). Outputs go under the data root:
-
-    curated                  curated/pieces/<piece_id>/{performance.mid, label.json, tempo.json,
-                             structure.json, meta_archive/structure_section_fusion.json},
-                             curated/manifests/{pieces,split}.parquet
-    high_quality             high_quality/{midi, metadata, prompts}/<sample_id>.*
-    large_public             aria_midi/deduped/{large_public_labels, structure_labels,
-                             key_estimates}; the Aria-MIDI deduped MIDI
-                             goes under aria_midi/deduped/data/ separately
-    large_public_annotation  large_public_annotation/benchmark.parquet
-
-    python -m taste.corpus.import_release --tier curated --release-dir <dataset root>
+Curated MIDI uses midi/<xx>/<piece_id>.mid, where xx follows the piece_ prefix.
+Aria-MIDI files are acquired separately under aria_midi/{pruned,deduped}/data/.
 """
 from __future__ import annotations
 

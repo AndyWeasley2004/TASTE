@@ -1,17 +1,8 @@
-"""Frame-level symbolic features (0.5 s hop, 26-d) and structure-probe teacher targets.
+"""Extract 26-d symbolic frames at 0.5 s hop, plus optional teacher targets.
 
---source teacher extracts the curated and high-quality pieces together with their teacher
-sections (section fusion for curated, constrained clustering for high_quality):
-  manifest.parquet       piece_id, source, shard, duration_sec, n_frames, boundaries_sec,
-                         section_letters, section_starts_sec, section_ends_sec
-  frames/shard_XXX.npz   key "<piece_id>" -> float32 [T, 26] feature matrix
---source large_public, aria (pruned release) and large_public_full (deduped release) extract
-features only, into manifest_<source>.parquet and <source>_frames/. The aria and
-large_public_full sweeps skip pieces over MAX_DURATION_SEC (listed in
-manifest_<source>_too_long.parquet) and carry an onset tempo estimate; the aria sweep also
-writes the pretrain tempo sidecar aria_midi/pruned/tempo_estimates/.
-
-    OMP_NUM_THREADS=1 python -m taste.annotation.structure_probe.extract_features --source teacher
+Teacher output uses manifest.parquet and frames/; other sources use
+manifest_<source>.parquet and <source>_frames/. Full Aria sweeps record skipped
+long pieces and onset tempos; the pruned sweep also writes tempo sidecars.
 """
 from __future__ import annotations
 

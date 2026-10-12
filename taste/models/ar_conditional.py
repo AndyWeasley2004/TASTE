@@ -1,22 +1,8 @@
-"""Conditional wrapper that adds attribute and imagery conditioning to the AR generator.
+"""Add attribute AdaLN and imagery cross-attention to the AR decoder.
 
-Two pathways are grafted onto the decoder from ``taste.models.ar``:
-
-* **Attributes** (emotion, genre, accompaniment, performance): one embedding
-  table per field with a trailing learned *null* row, used for both a missing
-  label and a dropped prefix. The four embeddings are summed and passed through
-  a shared trunk; each decoder layer owns a zero-initialised head that emits
-  ``(shift, scale, gate)`` for its self-attention and MLP branches (AdaLN-Zero).
-  The gate enters as ``(1 + gate)`` so that a zero head leaves the pretrained
-  branches at unit weight.
-* **Imagery**: precomputed frozen Qwen3-Embedding-4B per-token final-layer
-  states (``CONTEXT_DIM`` = 2560), read by a cross-attention block inserted in
-  every decoder layer between self-attention and the MLP, with a
-  zero-initialised output projection. A learned null context token is always
-  prepended to the states; a dropped-prefix row carries only that token.
-
-Both pathways are identities at initialisation, so a freshly wrapped model
-reproduces the pretrained model's logits.
+Attribute embeddings include a null row for missing/dropped labels. AR gates
+use 1 + gate; zero-initialized heads preserve pretrained logits. Imagery uses
+frozen Qwen states with a prepended learned null token.
 """
 from __future__ import annotations
 

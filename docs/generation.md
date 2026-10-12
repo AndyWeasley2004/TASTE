@@ -17,17 +17,9 @@ Use `prompts/example.json` for a single example or `prompts/high_quality_val.jso
 python -m taste.inference.sample_ar --help
 ```
 
-| Option | Purpose |
-|---|---|
-| `--n-seeds 4` | Generate four variants per prompt |
-| `--rows-per-batch 1` | Sample one output at a time; increase for throughput |
-| `--temperature 0.98` | Sampling temperature (default) |
-| `--top-p 0.98` | Nucleus sampling cutoff (default) |
-| `--max-new-tokens 4094` | Maximum generation length in tokens, not seconds |
+Outputs are `generated/<name>_k<i>.mid` and matching JSON files under `--output-dir`. `ended_naturally: false` indicates the token limit was reached; the emitted sections may differ from the generated plan.
 
-Outputs are `generated/<name>_k<i>.mid` and matching JSON files under `--output-dir`. JSON includes `plan`, `emitted_sections`, `ended_naturally` and token IDs. The generated plan and emitted sections can differ. If `ended_naturally` is false, sampling reached the token limit.
-
-Reproduce an output with the same prompt order, number of variants and batch layout: the recorded seed alone does not reproduce an individual row. `--rows-per-batch` limits MIDI sampling batches; text descriptions are encoded together. For large prompt lists, split the files to reduce text-encoding memory.
+Reproducibility requires the same prompt order, variant count and batch layout. `--rows-per-batch` limits MIDI sampling batches; split large prompt files to reduce text-encoding memory.
 
 ## Other AR checkpoints
 
@@ -41,7 +33,7 @@ python -m taste.inference.sample_ar_pretrain \
 
 ## DiT
 
-The released DiT sampler requires the high-quality latent-store index to obtain each piece's section plan and length. It does not currently accept arbitrary text prompts alone. Build the index through the [research workflow](research.md); prompt names must match its piece IDs.
+DiT takes section plans and lengths from the high-quality latent-store index. Build it through the [research workflow](research.md); prompt names must match its piece IDs.
 
 ```bash
 pip install -e ".[research]"
@@ -55,10 +47,6 @@ python -m taste.inference.sample_dit \
     --n-seeds 1 --batch 1 --output-dir out/dit
 ```
 
-The default index location is `$TASTE_DATA_ROOT/dit_latents/high_quality/{val,pass0}/index.parquet`; use `--latent-index-root` to select another root. Codec imports require `vector-quantize-pytorch`, including when loading the window VAE.
+The default index location is `$TASTE_DATA_ROOT/dit_latents/high_quality/{val,pass0}/index.parquet`; use `--latent-index-root` to select another root.
 
-## Local setup
-
-`TASTE_CKPT_ROOT` defaults to `checkpoints`; the imagery encoder cache is stored in its `hf_cache` directory unless `HF_HUB_CACHE` is already set. Keep the repository checkout when using the editable install: the tokenizer and attribute definitions are loaded from it.
-
-For CUDA errors, check that your PyTorch installation detects your GPU. No minimum VRAM figure is established here; both the MIDI model and the text encoder need GPU memory. Start with the single-prompt example.
+`TASTE_CKPT_ROOT` defaults to `checkpoints`; `HF_HUB_CACHE` overrides the default text-encoder cache at `checkpoints/hf_cache`. Keep the checkout for the editable install's tokenizer and attribute files.

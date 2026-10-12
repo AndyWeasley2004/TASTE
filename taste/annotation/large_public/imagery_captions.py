@@ -1,26 +1,8 @@
-"""Rewrite, verify, and merge the large-public imagery captions.
+"""Rewrite retrieved imagery with a local Qwen server, then verify and merge.
 
-Retrieved imagery repeats across pieces, so each piece's caption is rewritten
-by a local Qwen3.5-27B-FP8 conditioned on the retrieved caption plus the
-piece's present control attributes. The rewrite preserves the mood, energy and
-musical character implied by the caption and attributes and invents a fresh
-concrete scene. Temperature-1.0 sampling, a per-piece rotation of the few-shot
-examples, a scene-domain suggestion and two seed elements (all deterministic in
-piece_id) decorrelate pieces that share one retrieved caption.
-
-Validity is one predicate (`caption_violations`) shared by generation and
-verification: no musical vocabulary, no non-English characters, and at least
-MIN_WORDS words. `rewrite` regenerates a rejected caption up to MAX_ATTEMPTS
-times, naming the violated words back to the model, and re-queues cached
-captions that fail the predicate, so a rerun repairs the cache in place.
-`verify` reports the predicate corpus-wide plus caption diversity; `merge`
-writes the rewrites into the `imagery` column of labels.parquet.
-
-Usage:
-  vllm serve Qwen/Qwen3.5-27B-FP8 --port 8100 ...   # one server per GPU
-  python -m taste.annotation.large_public.imagery_captions rewrite --ports 8100,8101
-  python -m taste.annotation.large_public.imagery_captions verify
-  python -m taste.annotation.large_public.imagery_captions merge --backup-suffix <suffix>
+rewrite retries invalid captions and repairs cached failures using the same
+caption_violations predicate as verify. merge replaces the labels' imagery
+column; --backup-suffix preserves the previous labels.
 """
 from __future__ import annotations
 

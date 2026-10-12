@@ -1,14 +1,7 @@
-"""Structure-probe inference: one lettered section layout per piece of an extracted feature corpus.
+"""Predict section boundaries and letters from corpus frame features.
 
-Peaks of the boundary probability (threshold 0.15, at least 40 frames apart) cut the piece;
-segments are grouped by agglomerative merging on pairwise p(same) (tau 0.65, at most 8
-clusters), adjacent same-letter segments are merged, a final section under 5 s is absorbed
-into its predecessor, and letters are re-assigned by first appearance.
-
-    python -m taste.annotation.structure_probe.infer --source large_public_full \
-        --out-dir $TASTE_DATA_ROOT/aria_midi/deduped/structure_labels
-
-For several GPUs run one --gpu-shard K/N process per device, then --merge the parts.
+PRODUCTION_CONFIG defines boundary and merge thresholds. Distributed runs use
+--gpu-shard K/N followed by --merge.
 """
 from __future__ import annotations
 

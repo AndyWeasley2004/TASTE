@@ -1,23 +1,8 @@
-"""Tag probes and imagery retrieval for the 371,053-piece Aria-deduped corpus.
+"""Attribute probes and imagery retrieval from CLaMP 3, Aria and MIDI features.
 
-Each attribute field is predicted by a class-balanced logistic-regression probe
-on concatenated [CLaMP 3 symbolic-C2, Aria embedding, symbolic statistics]
-features, trained on the benchmark after confident-learning pruning of noisy
-labels. Every field is confidence-gated: the threshold is the lower of the one
-reaching 0.6 precision on the work-disjoint val split and the one at which
-COVERAGE_FLOOR of the corpus retains a prediction; gated rows carry an empty
-value with the raw prediction kept in `<field>_raw`. Genre comes from the Aria
-metadata when it maps into the vocabulary. Imagery is retrieved from the
-benchmark captions: Aria-cosine top-50 candidates scored by caption-space
-similarity (a ridge projection of Aria into the CLaMP 3 text space) and
-emotion-probe affect similarity. `apply` writes the retrieved caption to both
-`imagery` and `imagery_retrieval`; `imagery_captions.py merge` later replaces
-`imagery` with the rewrite.
-
-`fit` trains the probes, gates and projection from the benchmark; `apply`
-labels the corpus; `relabel-attributes` rebuilds only the four attribute
-fields on an existing labels.parquet, carrying imagery, key and tempo over
-(a full `apply` regenerates the imagery column and would discard the rewrites).
+fit trains probes and gates; apply labels the full deduplicated corpus.
+relabel-attributes preserves existing imagery, key and tempo; apply replaces
+imagery with retrieved captions. Gated-out values retain their raw predictions.
 """
 from __future__ import annotations
 

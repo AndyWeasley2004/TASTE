@@ -2,7 +2,7 @@
 
 [Back to README](../README.md) · [Generation](generation.md) · [Research](research.md)
 
-Use probes to estimate attributes or section structure from existing MIDI. These tools are separate from generation. Run commands from the repository root.
+Estimate attributes or section structure from MIDI. Run commands from the repository root.
 
 ```bash
 pip install -e ".[probes]"
@@ -46,7 +46,7 @@ for i, piece_id in enumerate(ids):
     print(piece_id, {field: str(values[i]) for field, values in predictions.items()})
 ```
 
-These are raw predictions and confidence scores. The corpus pipeline additionally applies confidence gates and metadata overrides. Its `tag_probes apply` command is specific to the full deduplicated corpus and validates its size; use the Python API above for smaller collections. Imagery retrieval and caption rewriting belong to the [annotation workflow](research.md), not this tag-scoring step.
+These are ungated predictions. `tag_probes apply` adds corpus-specific gates and metadata overrides and requires the full deduplicated corpus; use the API above for smaller collections.
 
 ## Section structure
 
@@ -57,6 +57,6 @@ python -m taste.annotation.structure_probe.extract_features --source large_publi
 python -m taste.annotation.structure_probe.infer --source large_public_full --out-dir sections
 ```
 
-Inference uses CUDA. Features are stored under `$TASTE_DATA_ROOT/structure_probe/`; predictions go to its `sections/` directory. Other supported sources are listed by `--help`. There is no standalone `--midi` CLI for arbitrary files yet.
+Requires CUDA. Predictions go to `$TASTE_DATA_ROOT/structure_probe/sections/`. See `--help` for other corpus sources; arbitrary single-file input is not supported.
 
 To retrain probes or reproduce the complete labels, see the [research guide](research.md) and [annotation launcher](../scripts/annotate_large_public.sh).

@@ -1,17 +1,7 @@
-"""Precompute frozen Qwen3-Embedding-4B token states of the imagery captions of an SFT corpus.
+"""Cache frozen Qwen3 imagery states as per-piece [length, 2560] bf16 arrays.
 
-Each piece gets one ``[len, 2560]`` bf16 array of final-layer
-``last_hidden_state`` over its real tokens (pad states discarded). Captions are
-read from the corpus (``imagery`` on the data shards, ``piece_id`` on the index
-shards) and encoded once per piece, in the first row shard the piece appears
-in. A piece with an empty caption gets ``length = 0`` in the manifest, and the
-trainer feeds it the learned null context token alone.
-
-Shard run (one process per GPU):
-    python -m taste.representation.imagery_states --data-dir <corpus> \
-        --device-index 0 --num-workers-split 2 --split-rank 0
-Finalize (after all splits finish):
-    python -m taste.representation.imagery_states --data-dir <corpus> --finalize
+Padding is removed; empty captions have length zero and use the trainer's null
+context. Run --finalize after all distributed extraction shards finish.
 """
 
 import argparse

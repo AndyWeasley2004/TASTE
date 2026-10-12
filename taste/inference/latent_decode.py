@@ -1,28 +1,8 @@
-"""Latent to MIDI: grammar-constrained free-running decode of the window VAE.
+"""Grammar-constrained window-VAE decoding with optional K/V caching.
 
-The codec (``taste.codec``) maps every second of music to one 128-d latent. Its
-decoder is causal and reconstructs the concatenated stream of up to
-``MAX_WINDOWS`` seconds (``<T>`` + the second's events, per-second latent added
-as a segment embedding before every layer). Unconstrained greedy decoding in
-``eval()`` mode collapses, so decoding is grammar constrained: the logits are
-masked to
-
-    head  -> piano head | pedal head | <T>
-    piano head -> onset
-    pedal head -> onset
-    onset (after a piano head) -> duration
-
-with onsets non-decreasing inside a second. ``<E>`` is masked out entirely: the
-piece length is known, so a chunk ends when its ``(n + 1)``-th ``<T>`` would be
-emitted.
-
-Chunks of a whole cohort are decoded in lockstep with per-row grammar state,
-and :class:`CachedDecoder` keeps per-layer K/V caches so each step costs one
-token (``use_cache=False`` runs the codec's own full-prefix decoder).
-
-``rebuild_row`` turns the decoded seconds back into a corpus-format row
-(``<KEY> <TEMPO> plan <prefix> <S> ... <E>``) and ``write_midi`` detokenizes it
-with the shared tokenizer.
+Piano heads require onset and duration; pedal heads require onset. Onsets must
+be non-decreasing within each second. EOS is masked: the known chunk length
+determines termination. Rebuilt token rows use the shared MIDI tokenizer.
 """
 from __future__ import annotations
 

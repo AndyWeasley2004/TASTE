@@ -1,22 +1,8 @@
-"""Latent DiT over the window-VAE latents.
+"""Latent DiT with global labels, section-plan embeddings and imagery attention.
 
-The backbone is a 1-D bidirectional transformer over at most ``max_len``
-latents. Conditioning enters three ways:
-
-* **global**: the timestep plus one embedding table per label field (the four
-  attributes, key, tempo, ``complete``, ``start_mid``), each with a trailing
-  *null* row that serves both "label unknown" and classifier-free dropout. The
-  label sum goes through a SiLU MLP and is added to the timestep code; every
-  block turns that code into ``(shift, scale, gate)`` for its three branches
-  (AdaLN-Zero with DiT's bare gate, so a zero head switches a branch off).
-* **plan**: the per-latent section id and the latents elapsed since the
-  section run started, added as input embeddings.
-* **imagery**: the frozen Qwen3-Embedding-4B states, cross-attended in every
-  block. A learned null context token is prepended to every context, so an
-  empty context is the null token alone.
-
-At initialisation the output is exactly zero (the final projection is
-zero-initialised).
+Missing/dropped labels use null embeddings. Imagery always includes a learned
+null token. Bare AdaLN gates disable branches at zero; the zero-initialized
+final projection makes the initial output zero.
 """
 from __future__ import annotations
 

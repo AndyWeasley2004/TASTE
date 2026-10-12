@@ -6,7 +6,7 @@ Official implementation of **TASTE**: generate expressive solo-piano MIDI from m
 
 ## Generate your first MIDI
 
-Start with the released **AR model**. It generates its own section plan from your tags and imagery description. You need Python 3.11+ and a CUDA GPU with bfloat16 support. The first run also downloads Qwen3-Embedding-4B to encode the text.
+Requires Python 3.11+ and a CUDA GPU with bfloat16 support. The first run downloads Qwen3-Embedding-4B for text encoding.
 
 ### 1. Install
 
@@ -18,8 +18,6 @@ source .venv/bin/activate
 pip install -e .
 ```
 
-The default install covers AR generation. No dataset, annotation service or API key is needed.
-
 ### 2. Download and generate
 
 ```bash
@@ -30,28 +28,11 @@ python -m taste.inference.sample_ar \
     --n-seeds 1 --rows-per-batch 1 --output-dir out/ar
 ```
 
-Open **`out/ar/generated/library_k0.mid`** in your DAW or MIDI player with a piano instrument. The matching JSON file records the prompt, generated section plan and sampling details. The sampler produces MIDI, not rendered audio.
+Output: **`out/ar/generated/library_k0.mid`**, plus a JSON file with sampling details. Open the MIDI in a DAW or piano player.
 
 ### 3. Make it yours
 
-Edit [prompts/example.json](prompts/example.json):
-
-```json
-[
-  {
-    "name": "library",
-    "emotion": "sad",
-    "genre": "classical",
-    "accompaniment": "sustained",
-    "performance": "steady detached",
-    "key": "A minor",
-    "tempo": "moderate",
-    "imagery": "An abandoned library in autumn, sunlight slanting through tall windows."
-  }
-]
-```
-
-The file is a JSON **list**: add more objects for more prompts. Keep all fields; set any of `emotion`, `genre`, `accompaniment` or `performance` to `null` to leave that attribute unspecified. See [the tag vocabulary](attributes.json) for accepted values. Increase `--n-seeds` for more variants.
+Edit [prompts/example.json](prompts/example.json) with your tags and imagery description. See [attributes.json](attributes.json) for tag values; use `null` for unspecified attributes. Add prompts to the JSON list or increase `--n-seeds` for more outputs. AR generates its own section plan.
 
 ## Other uses
 
@@ -60,8 +41,6 @@ The file is a JSON **list**: add more objects for more prompts. Keep all fields;
 | Adjust generation, use another AR checkpoint, or run DiT | [Generation guide](docs/generation.md) |
 | Predict musical attributes or section structure | [Probing guide](docs/probing.md) |
 | Use the dataset, reproduce annotations, or train models | [Research guide](docs/research.md) |
-
-Generation code lives in [`taste/inference/`](taste/inference/); probes live in [`taste/annotation/`](taste/annotation/). The research guide contains the full code map and checkpoint inventory.
 
 ## Citation
 
