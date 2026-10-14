@@ -2,7 +2,7 @@
 
 Official implementation of **TASTE**, a taxonomy-aware framework for translating musical intentions into expressive solo-piano MIDI. TASTE combines explicit musical attributes, section structure, and free-form imagery descriptions with tiered annotation and staged training, demonstrated through autoregressive and diffusion Transformer generators.
 
-[Demo](https://taste-piano.github.io/) | [Dataset](https://huggingface.co/datasets/Itsuki-music/TASTE) | [Checkpoints](https://huggingface.co/Itsuki-music/TASTE)
+[Paper](https://arxiv.org/abs/2610.15960) | [Demo](https://taste-piano.github.io/) | [Dataset](https://huggingface.co/datasets/Itsuki-music/TASTE) | [Checkpoints](https://huggingface.co/Itsuki-music/TASTE)
 
 ## Generate your first MIDI
 
@@ -46,13 +46,14 @@ Edit [prompts/example.json](prompts/example.json) with your tags and imagery des
 ## Citation
 
 ```bibtex
-% TODO: arXiv id and final author list
 @misc{yao2026taste,
   title         = {TASTE: Taxonomy-Aware Symbolic Piano Generation from Textual Description},
-  author        = {Mingyang Yao and others},
+  author        = {Mingyang Yao and Jingyue Huang and Ke Chen and Taylor Berg-Kirkpatrick and Shlomo Dubnov},
   year          = {2026},
-  eprint        = {TODO},
-  archivePrefix = {arXiv}
+  eprint        = {2610.15960},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SD},
+  url           = {https://arxiv.org/abs/2610.15960}
 }
 ```
 
