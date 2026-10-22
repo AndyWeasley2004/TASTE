@@ -2,7 +2,8 @@
 # Usage: AUDIO_DIR=<performance audio> bash scripts/annotate_high_quality.sh
 # Reference pipeline that reproduces the high-quality section timing, key and tempo shipped
 # by import_release.sh. Assumes TASTE_DATA_ROOT/TASTE_CKPT_ROOT, the Aria repository at
-# TASTE_ARIA_ROOT, LD_PRELOAD for pretty_midi, and the structure probe trained by annotate_curated.sh.
+# TASTE_ARIA_ROOT, and the structure probe trained by annotate_curated.sh.
+# Uses Aria (EleutherAI/aria) and Beat This! (CPJKU/beat_this).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 

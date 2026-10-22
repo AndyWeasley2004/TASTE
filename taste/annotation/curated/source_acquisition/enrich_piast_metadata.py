@@ -1,3 +1,5 @@
+# Uses PIAST-YT source IDs from https://github.com/Hayeonbang/PIAST.
+# Metadata acquisition uses yt-dlp; this wrapper is local code.
 """Retrieve YouTube metadata (no audio) for the official PIAST-YT video IDs."""
 from __future__ import annotations
 

@@ -7,15 +7,16 @@ Run commands from the repository root.
 ## Environment
 
 ```bash
-conda create -n taste python=3.11 && conda activate taste
-pip install -e ".[research]"
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[all]"
 export TASTE_DATA_ROOT=/path/to/data          # datasets, corpora, latent stores
 export TASTE_CKPT_ROOT=/path/to/checkpoints   # downloaded and trained checkpoints, HF cache
 export TASTE_CLAMP3_ROOT=/path/to/clamp3      # CLaMP 3 repository (tag probes)
 export TASTE_ARIA_ROOT=/path/to/aria          # Aria repository (high-quality section timing)
 ```
 
-- The section-fusion worker of the curated structure analysis runs in a Python 3.7 conda environment with `musicsections`, named by `TASTE_SECTION_FUSION_ENV` (default `structure`).
+For data work without generator training, use `pip install -e ".[pipeline]"`. Set up the external CLaMP 3, section-fusion and vLLM workers using the [dependency guide](dependencies.md); it also lists system packages and checkpoint prerequisites.
 
 Annotation launchers list their model and service prerequisites. The evidence route uses `JINA_API_KEY`; the audio route uses `GEMINI_API_KEY`.
 

@@ -1,3 +1,5 @@
+# Uses Aria / aria-utils by EleutherAI:
+# https://github.com/EleutherAI/aria and https://github.com/EleutherAI/aria-utils.
 """Frame-level features from the hidden states of the Aria base model (loubb/aria-medium-base).
 
 Each note contributes the hidden state at its duration token (which causally sees the

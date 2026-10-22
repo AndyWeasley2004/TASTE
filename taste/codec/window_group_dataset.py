@@ -1,3 +1,5 @@
+# Adapted from MuseTok, "Symbolic Music Tokenization for Generation and
+# Semantic Understanding" (ICASSP 2026): https://github.com/Yuer867/MuseTok.
 """Window-group dataset for codec training, adapted from MuseTok's event dataset.
 
 Serves groups of consecutive 1-second windows, split online from the memmapped

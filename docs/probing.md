@@ -2,10 +2,10 @@
 
 [Back to README](../README.md) · [Generation](generation.md) · [Research](research.md) · [Code map](code-map.md)
 
-Estimate attributes or section structure from MIDI. Run commands from the repository root.
+Estimate attributes or section structure from MIDI. Run commands from the repository root. The [dependency guide](dependencies.md) covers all probe stages and external feature/teacher workers.
 
 ```bash
-pip install -e ".[probes]"
+pip install -e ".[pipeline]"
 export TASTE_DATA_ROOT=/path/to/data
 export TASTE_CKPT_ROOT=/path/to/checkpoints
 hf download Itsuki-music/TASTE --include "probes/*" --local-dir "$TASTE_CKPT_ROOT"
@@ -18,7 +18,7 @@ hf download Itsuki-music/TASTE --include "probes/*" --local-dir "$TASTE_CKPT_ROO
 
 ## Musical tags
 
-Tag extraction needs the external CLaMP 3 checkout and its model dependencies; set `TASTE_CLAMP3_ROOT` to its path. The Aria tag extractor loads `loubb/aria-medium-embedding` through Transformers with the revision pinned in `features.py`. `TASTE_ARIA_ROOT` is used by the separate high-quality section-timing pipeline.
+Tag extraction needs the external CLaMP 3 checkout and its worker environment; set `TASTE_CLAMP3_ROOT` and `TASTE_CLAMP3_PYTHON` as described in the dependency guide. The Aria tag extractor loads `loubb/aria-medium-embedding` through Transformers with the revision pinned in `features.py`. `TASTE_ARIA_ROOT` is used by the separate high-quality section-timing pipeline.
 
 For your own MIDI collection, use a fresh `TASTE_DATA_ROOT` to isolate feature caches (cached vectors are keyed by piece ID). Create a manifest with unique, filename-safe `piece_id` strings and absolute `midi_path` strings:
 
@@ -103,7 +103,7 @@ The large-public launcher also performs imagery retrieval, starts a local langua
 
 ## Adapt training or structure probing to another dataset
 
-**Tag training.** Extract the same three feature archives, plus `features clamp3-text --manifest benchmark.parquet --output features/text.npz`. Your benchmark needs `piece_id`, `midi_path`, `split_group`, `split` (`train`/`val`), `emotion`, `genre`, `accompaniment`, `expression`, `articulation`, `performance`, and `imagery`. Use the [tag vocabulary](../attributes.json); performance is the space-separated expression/articulation pair. Keep performances of the same work in one split group. Missing labels may be null, but each fitted head needs class coverage and enough groups for five-fold pruning; performance calibration requires `flexible` and `detached` classes, and imagery fitting needs nonempty captions.
+**Tag training.** Extract the same three feature archives, plus `features clamp3-text --manifest benchmark.parquet --output features/text.npz --gpus 0`. Your benchmark needs `piece_id`, `midi_path`, `split_group`, `split` (`train`/`val`), `emotion`, `genre`, `accompaniment`, `expression`, `articulation`, `performance`, and `imagery`. Use the [tag vocabulary](../attributes.json); performance is the space-separated expression/articulation pair. Keep performances of the same work in one split group. Missing labels may be null, but each fitted head needs class coverage and enough groups for five-fold pruning; performance calibration requires `flexible` and `detached` classes, and imagery fitting needs nonempty captions.
 
 ```bash
 python -m taste.annotation.large_public.tag_probes fit \

@@ -1,3 +1,5 @@
+# Uses the Pop2Piano source index: https://github.com/sweetcocoa/pop2piano.
+# Audio acquisition uses yt-dlp and FFmpeg; the download wrapper is local code.
 """Download the piano-cover audio of the Pop2Piano index and the original song's YouTube metadata."""
 
 import argparse
@@ -17,8 +19,7 @@ from tqdm import tqdm
 
 
 DOWNLOADER = (
-    shutil.which("yt-dlp_macos")
-    or shutil.which("yt-dlp")
+    shutil.which("yt-dlp")
     or shutil.which("youtube-dl")
 )
 if DOWNLOADER is None:

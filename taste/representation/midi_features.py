@@ -1,3 +1,6 @@
+# The onset-tempo heuristic is inspired by Simon Dixon, "Automatic Extraction
+# of Tempo and Beat from Expressive Performances" (2001). This is a simplified
+# local IOI histogram estimator, not the full Dixon beat-tracking algorithm.
 """Performance-MIDI statistics: note reading, onset-based tempo estimation and the symbolic feature vector."""
 from __future__ import annotations
 

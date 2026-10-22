@@ -15,7 +15,7 @@ fi
 
 MODEL_PATH="$HF_HUB_CACHE/models--Qwen--Qwen3.6-35B-A3B/snapshots/995ad96eacd98c81ed38be0c5b274b04031597b0"
 
-vllm serve "$MODEL_PATH" \
+"${TASTE_VLLM_BIN:-vllm}" serve "$MODEL_PATH" \
     --served-model-name Qwen/Qwen3.6-35B-A3B \
     --host 127.0.0.1 \
     --port "${PORT:-8000}" \

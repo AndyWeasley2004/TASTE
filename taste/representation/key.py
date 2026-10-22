@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Method: duration-weighted pitch-class profile correlation using Kostka-Payne
+# profiles reported in David Temperley, Music and Probability (2007), Table 6.1.
+# Profile reference: https://github.com/CPJKU/partitura/blob/main/partitura/utils/globals.py
+# Implemented locally; Partitura is not a runtime dependency.
 """Estimate one global major/minor key per MIDI file (Kostka-Payne profiles over performed note durations).
 
 ``--dataset curated`` and ``--dataset high_quality`` write the key into each

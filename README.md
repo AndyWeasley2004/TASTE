@@ -18,6 +18,8 @@ source .venv/bin/activate
 pip install -e .
 ```
 
+For data-pipeline or full-training dependencies, see the [dependency profiles](docs/dependencies.md).
+
 ### 2. Download and generate
 
 ```bash

@@ -1,3 +1,5 @@
+# Adapted from MuseTok, "Symbolic Music Tokenization for Generation and
+# Semantic Understanding" (ICASSP 2026): https://github.com/Yuer867/MuseTok.
 """Window codecs adapted from MuseTok: a residual-VQ tokenizer and a Gaussian VAE.
 
 Both share one scaffolding: a Transformer encoder summarises each 1-second

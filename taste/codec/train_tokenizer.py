@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Adapted from MuseTok, "Symbolic Music Tokenization for Generation and
+# Semantic Understanding" (ICASSP 2026): https://github.com/Yuer867/MuseTok.
 """Train the window codec (VAE or residual VQ), with MuseTok's schedule.
 
     python -m taste.codec.train_tokenizer configs/codec/tokenizer.yaml

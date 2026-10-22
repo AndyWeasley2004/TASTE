@@ -38,7 +38,7 @@ python -m taste.annotation.large_public.tag_probes apply \
   --tempo-features "$L/deduped_symbolic_features.npz"
 
 # Rewrite each retrieved imagery caption with a local Qwen3.5-27B-FP8, verify, and merge.
-vllm serve Qwen/Qwen3.5-27B-FP8 --port 8100 &
+"${TASTE_VLLM_BIN:-vllm}" serve Qwen/Qwen3.5-27B-FP8 --port 8100 &
 SERVER=$!
 until curl -sf http://127.0.0.1:8100/v1/models >/dev/null; do sleep 10; done
 python -m taste.annotation.large_public.imagery_captions rewrite --ports 8100

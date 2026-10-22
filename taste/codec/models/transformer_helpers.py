@@ -1,3 +1,5 @@
+# Adapted from MuseTok, "Symbolic Music Tokenization for Generation and
+# Semantic Understanding" (ICASSP 2026): https://github.com/Yuer867/MuseTok.
 """Transformer building blocks for the window codec, adapted from MuseTok."""
 from __future__ import annotations
 

@@ -1,3 +1,5 @@
+# Uses Aria / aria-utils by EleutherAI:
+# https://github.com/EleutherAI/aria and https://github.com/EleutherAI/aria-utils.
 """Piano MIDI tokenizer: Aria's absolute tokenizer on a 25 ms grid with 5-second windows.
 
 Pedal events are explicit and ordered before simultaneous notes, velocities use

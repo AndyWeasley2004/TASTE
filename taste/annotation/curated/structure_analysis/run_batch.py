@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Structure analysis: resumable Beat This beat tracking followed by section fusion over an audio collection.
 
-Beat This workers run with the current interpreter and section-fusion workers in the conda env named by
-`TASTE_SECTION_FUSION_ENV` (default `structure`).
+Uses Beat This! (Foscarin et al., ISMIR 2024; https://github.com/CPJKU/beat_this)
+and section fusion (Salamon et al., ISMIR 2021;
+https://github.com/justinsalamon/musicseg_deepemb).
+Set TASTE_SECTION_FUSION_PYTHON to the interpreter with the legacy worker dependencies.
 """
 
 import argparse
@@ -22,7 +24,7 @@ from taste import paths
 MODULE_DIR = Path(__file__).resolve().parent
 DEFAULT_MODEL_ROOT = paths.ckpt("section_fusion", "models")
 DEFAULT_TORCH_HOME = paths.ckpt("beat_this")
-SECTION_FUSION_ENV = os.environ.get("TASTE_SECTION_FUSION_ENV", "structure")
+SECTION_FUSION_PYTHON = os.environ.get("TASTE_SECTION_FUSION_PYTHON", sys.executable)
 AUDIO_EXTENSIONS = {".aac", ".flac", ".m4a", ".mp3", ".ogg", ".wav"}
 PIECE_AUDIO_NAME = "rendered_audio.mp3"
 PIECE_BEATS_NAME = "audio_beats.txt"
@@ -211,8 +213,7 @@ def _run_workers(
             else:
                 worker = MODULE_DIR / "section_fusion_worker.py"
                 command = [
-                    "conda", "run", "--no-capture-output", "-n", SECTION_FUSION_ENV,
-                    "python", str(worker),
+                    SECTION_FUSION_PYTHON, str(worker),
                     "--manifest", str(shard_path),
                     "--result", str(result_path),
                     "--ready", str(ready_path),

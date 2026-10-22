@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Uses Beat This! by Foscarin, Schlueter and Widmer (ISMIR 2024).
+# Upstream: https://github.com/CPJKU/beat_this (MIT).
 """Persistent Beat This worker: writes one beat-time file per audio item of its shard; launched by run_batch.py."""
 
 import argparse

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Audio beat times come from Beat This! (Foscarin et al., ISMIR 2024):
+# https://github.com/CPJKU/beat_this. The MIDI fallback uses the Dixon-inspired
+# heuristic in midi_features.py.
 """Estimate one global tempo per piece from its beat track and store it with the piece's labels.
 
 The tempo is ``60 / median(inter-beat interval)``, mapped to a tempo class by

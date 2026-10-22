@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Persistent section-fusion worker: beat-synchronous deep features, spectral clustering and section fusion per audio file.
 
-It runs in a separate Python 3.7 conda env (`structure`) and is launched by run_batch.py.
+Uses musicsections: Salamon, Nieto and Bryan, "Deep Embeddings and Section
+Fusion Improve Music Segmentation" (ISMIR 2021), including DEEPSIM and few-shot
+embeddings. Upstream: https://github.com/justinsalamon/musicseg_deepemb
+Launched by run_batch.py with TASTE_SECTION_FUSION_PYTHON; dependencies are
+listed in requirements/workers/section-fusion.txt.
 """
 
 import argparse
@@ -129,7 +133,7 @@ def main():
     if gpu_requested and not tensorflow_gpus:
         raise RuntimeError(
             "A GPU section-fusion worker was requested, but TensorFlow registered no GPU. "
-            "Check the structure environment's CUDA libraries and LD_LIBRARY_PATH."
+            "Check the worker interpreter's TensorFlow/CUDA installation."
         )
 
     load_start = time.perf_counter()

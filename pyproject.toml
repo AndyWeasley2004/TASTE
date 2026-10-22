@@ -13,8 +13,11 @@ dynamic = ["dependencies", "optional-dependencies"]
 dependencies = { file = ["requirements-generation.txt"] }
 
 [tool.setuptools.dynamic.optional-dependencies]
+pipeline = { file = ["requirements-pipeline.txt"] }
+all = { file = ["requirements.txt"] }
+# Backward-compatible names for existing installation commands.
 research = { file = ["requirements.txt"] }
-probes = { file = ["requirements-probes.txt"] }
+probes = { file = ["requirements-pipeline.txt"] }
 
 [tool.setuptools.packages.find]
 include = ["taste*"]

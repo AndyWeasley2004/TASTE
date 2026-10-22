@@ -1,0 +1,33 @@
+# Data pipeline: acquisition, annotation, probe training/inference and corpus building.
+# External CLaMP 3, section-fusion and vLLM workers: requirements/workers/;
+# install those in separate environments as described in docs/dependencies.md.
+torch==2.10.0
+torchaudio==2.10.0
+transformers==5.9.0
+safetensors==0.7.0
+huggingface_hub==1.16.4
+numpy==2.2.6
+scipy==1.17.1
+pandas==3.0.3
+pyarrow==24.0.0
+tqdm==4.67.3
+mido==1.3.3
+pretty_midi==0.2.11
+ariautils @ git+https://github.com/EleutherAI/aria-utils.git@7c815755c6889a784b6a1b3343e9e8daa3e7d128
+scikit-learn==1.8.0
+joblib==1.5.3
+# Transkun transcription and audio I/O.
+moduleconf==0.1.4
+pydub==0.25.1
+soxr==1.1.0
+soundfile==0.13.1
+# Audio beats, source acquisition and annotation clients.
+beat-this==1.1.0
+yt-dlp==2026.10.21
+omegaconf==2.3.1
+openai==2.24.0
+qwen-agent==0.0.34
+google-genai==2.11.0
+# Codec imports used when building DiT latent stores.
+PyYAML==6.0.3
+vector-quantize-pytorch==1.31.6

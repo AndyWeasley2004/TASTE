@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Uses CLaMP 3 (https://github.com/sanderwood/clamp3) and Aria
+# (https://github.com/EleutherAI/aria; loubb/aria-medium-embedding).
+# The symbolic feature extractor is implemented in taste.representation.midi_features.
 """Extract the three feature families of the tag probes for a manifest.
 
 `symbolic` computes the 32 interpretable MIDI statistics; `aria` and `clamp3`
@@ -619,7 +622,7 @@ def main() -> None:
     clamp.add_argument("--shard-root", type=Path, default=ROOT / "clamp3_midi_shards")
     clamp.add_argument("--cache", type=Path, default=ROOT / "clamp3_cache")
     clamp.add_argument("--output", type=Path, default=ROOT / "clamp3_features.npz")
-    clamp.add_argument("--python", default=sys.executable)
+    clamp.add_argument("--python", default=os.environ.get("TASTE_CLAMP3_PYTHON", sys.executable))
     clamp.add_argument("--workers", type=int, default=8)
     clamp.add_argument(
         "--gpus", required=True,
@@ -634,7 +637,7 @@ def main() -> None:
     clamp_text.add_argument("--shard-root", type=Path, default=ROOT / "clamp3_text_shards")
     clamp_text.add_argument("--cache", type=Path, default=ROOT / "clamp3_text_cache")
     clamp_text.add_argument("--output", type=Path, default=ROOT / "clamp3_text_features.npz")
-    clamp_text.add_argument("--python", default=sys.executable)
+    clamp_text.add_argument("--python", default=os.environ.get("TASTE_CLAMP3_PYTHON", sys.executable))
     clamp_text.add_argument(
         "--gpus", required=True,
         help="comma-separated physical GPU IDs; repeat an ID for multiple workers",

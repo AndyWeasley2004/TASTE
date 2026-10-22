@@ -43,7 +43,7 @@ MODEL_PATH = paths.ckpt(
     "snapshots",
     "995ad96eacd98c81ed38be0c5b274b04031597b0",
 )
-VLLM_BIN = Path("vllm")
+VLLM_BIN = Path(os.environ.get("TASTE_VLLM_BIN", "vllm"))
 REVISION = "gemini35_flash_qwen36_normalization_v4_grounded_first_section"
 SOURCE_GENRE_POLICY_REVISION = "source_genre_prior_v1"
 FIELDS = ("emotion", "genre", "accompaniment", "performance", "sentiments")

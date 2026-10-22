@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Usage: AUDIO_DIR=<audio of audio-only sources> bash scripts/annotate_curated.sh
 # Reference pipeline that reproduces the curated labels shipped by import_release.sh.
-# Assumes TASTE_DATA_ROOT/TASTE_CKPT_ROOT/TASTE_CLAMP3_ROOT, a Python 3.7 conda env with
-# musicsections (TASTE_SECTION_FUSION_ENV), JINA_API_KEY for the evidence route,
+# Uses Transkun (Yujia-Yan/Transkun), Beat This! (CPJKU/beat_this), and
+# section fusion / DEEPSIM (justinsalamon/musicseg_deepemb).
+# Assumes the workers in docs/dependencies.md, TASTE_DATA_ROOT/TASTE_CKPT_ROOT/
+# TASTE_CLAMP3_ROOT, JINA_API_KEY for the evidence route,
 # GEMINI_API_KEY for the audio route, and the high-quality teacher sections in place
 # (from import_release.sh). Run before annotate_high_quality.sh, which needs the probe trained here.
 set -euo pipefail
